@@ -44,7 +44,7 @@ public class DataHelperRegistrationTest {
         var user = DataHelper.getUser();
         var loginPage = new LoginPage();
 
-        for(int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             loginPage.clearFields();
             loginPage.errorLogin(user.getLogin(), "wrong_password_123");
         }

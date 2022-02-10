@@ -2,7 +2,6 @@ package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
-import ru.netology.data.DataHelper;
 
 
 import static com.codeborne.selenide.Selenide.$;
@@ -27,7 +26,7 @@ public class LoginPage {
         return new LoginPage();
     }
 
-    public void clearFields(){
+    public void clearFields() {
 
         loginField.sendKeys(Keys.CONTROL + "A");
         loginField.sendKeys(Keys.BACK_SPACE);

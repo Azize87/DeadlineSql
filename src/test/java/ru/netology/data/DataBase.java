@@ -33,4 +33,12 @@ public class DataBase {
         return runner.query(connection, "select status from users\n" +
                 "where login = '" + user + "'", new ScalarHandler<>());
     }
+
+    @SneakyThrows
+    public void clearData() {
+        runner.execute(connection, "DELETE FROM auth_codes");
+        runner.execute(connection, "DELETE FROM card_transactions");
+        runner.execute(connection, "DELETE FROM cards");
+        runner.execute(connection, "DELETE FROM users");
+    }
 }

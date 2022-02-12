@@ -2,8 +2,10 @@ package ru.netology.test;
 
 
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import ru.netology.data.DataBase;
 import ru.netology.data.DataHelper;
 import ru.netology.page.LoginPage;
@@ -15,7 +17,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DataHelperRegistrationTest {
 
     DataBase dataBase = new DataBase("jdbc:mysql://localhost:3306/mySqldb", "dbUser", "ps34df");
@@ -26,6 +28,10 @@ public class DataHelperRegistrationTest {
         Configuration.holdBrowserOpen = true;
     }
 
+    @AfterAll
+    void clearData(){
+        dataBase.clearData();
+    }
 
     @Test
     void shouldEnterInPersonalAccount() {
@@ -51,8 +57,7 @@ public class DataHelperRegistrationTest {
 
         String accStatus = dataBase.getAccountStatus(user.getLogin());
 
-        $("[data-test-id='error-notification']")
-                .shouldBe(visible).shouldHave(exactText("Ошибка Ошибка! Неверно указан логин или пароль"));
+        loginPage.assertNotificationText();
         assertEquals("blocked", accStatus);
 
     }

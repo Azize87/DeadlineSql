@@ -4,13 +4,19 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
 
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
     private SelenideElement loginField = $("[data-test-id='login'] input");
     private SelenideElement passwordField = $("[data-test-id=password] input");
     private SelenideElement loginButton = $("[data-test-id=action-login]");
+    private SelenideElement notification = $("[data-test-id='error-notification']");
 
+    public void assertNotificationText(){
+        notification.shouldBe(visible).shouldHave(exactText("Ошибка Ошибка! Неверно указан логин или пароль"));
+    }
 
     public VerificationPage login(String user, String password) {
         loginField.setValue(user);
